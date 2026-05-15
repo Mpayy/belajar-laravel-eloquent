@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Scopes\IsActiveScope;
 use Database\Seeders\CategorySeeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -123,5 +124,83 @@ class CategoryController extends Controller
             "total_awal"=> $totalAwal,
             "total_akhir" => $totalAkhir
         ]);
+    }
+
+    public function testCreateMassAssignment()
+    {
+        $request = [
+            "id" => "FOOD",
+            "name" => "Food",
+            "description" => "Food Description"
+        ];
+
+        $category = new Category($request);
+        $category->save();
+
+        return response()->json([
+            "message" => "Success created MassAssignment category",
+            "category" => $category
+        ]);
+    }
+
+    public function testCreateWithQueryBuilder()
+    {
+        $request = [
+            "id" => "FOOD",
+            "name" => "Food",
+            "description" => "Food Description"
+        ];
+
+        $category = Category::create($request);
+
+        return response()->json([
+            "message" => "Success created Query Builder category",
+            "category" => $category
+        ]);
+    }
+
+    public function testUpdateMass()
+    {
+        $request = [
+            "name" => "Food Update",
+            "description" => "Food Description Update"
+        ];
+
+        $category = Category::find("FOOD");
+        $category->fill($request);
+        $category->save();
+
+        return response()->json([
+            "message" => "Success updated MassAssignment category",
+            "category" => $category
+        ]);
+    }
+
+    public function testRemoveGlobalScope()
+    {
+        $category = new Category();
+        $category->id = "FOOD";
+        $category->name = "Food";
+        $category->description = "Food Category";
+        $category->is_active = false;
+        $category->save();
+
+        $category = Category::find("FOOD");
+
+        return response()->json($category);
+    }
+
+    public function testWithoutGlobalScope()
+    {
+        $category = new Category();
+        $category->id = "FOOD";
+        $category->name = "Food";
+        $category->description = "Food Category";
+        $category->is_active = false;
+        $category->save();
+
+        $category = Category::withoutGlobalScope(IsActiveScope::class)->find("FOOD");
+
+        return response()->json($category);
     }
 }
