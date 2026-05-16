@@ -26,3 +26,11 @@ Eloquent
 - GlobalScope = membuatnya dengan perintah make:scope NamaScope, pengisiannya bisa di lihat di Models/Scopes/NamaScope.php, setelah itu kita jangan lupa mengimport GlobalScope nya di method boot() pada model dengan cara use App\Models\Scopes\NamaScope;, setelah itu kita tinggal menambahkan nama methodnya di querynya, misal query()->namaScope(), dan GlobalScope ini akan otomatis jalan setiap kali model tersebut diakses. jika kita tidak ingin menggunakannya, bisa gunakan withoutGlobalScope(NamaScope::class) sebelum melakukan query
 
 - LocalScope = di buat langsung di Modelnya dengan Builder, cara membuatnya bisa dilihat di Model Voucher,dan jangan lupa import use Illuminate\Database\Eloquent\Builder; pada modelnya. cara menggunakanyanya, di controller tinggal menambahkan nama methodnya di querynya, misal query()->namaScope(), gunakan prefixnya saja dan menggunakan lowercase.
+
+- one-to-one = hasOne -> belongTo, $data->namaRelasi;
+- one-to-many = hasMany -> belongTo, $data->namaRelasi;
+- query builder relation = hubungan antar relasi juga bisa di tambahkan query, contoh namaRelasi()->where()
+- Has One of Many = dalam tabel yang berelasi HasMany, bisa juga di buatkan HasOnenya jika kita hanya ingin mengambil 1 data saja di tabel belongTo nya
+- Has One Through = hubungan antara 3 tabel yang tiap tabelnya berelasi hasOne, contoh tabel1->tabel2->tabel3, dari tabel1 bisa di hubungkan hasOne ke tabel3, dengan melewati tabel2, jadi sama seperti nge join tabel1, tabel2, tabel3
+- Has Many Through =  
+- many-to-many = hubungan ini membutuhkan 1 tabel perantara yang menhubungkan kedua tabel, menggunakan belongToMany di setiap tabel yang berhubungan, dan didalamnya ditambahkan tabel penghubungya, dan cara menambahkan atau mebuat data di tabel relasinya menggunakan attach() dan untuk menghapus relasinya menggunakan detach()

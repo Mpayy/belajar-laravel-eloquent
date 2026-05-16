@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Scopes\IsActiveScope;
 use Database\Seeders\CategorySeeder;
 use Illuminate\Database\Eloquent\Model;
@@ -202,5 +203,76 @@ class CategoryController extends Controller
         $category = Category::withoutGlobalScope(IsActiveScope::class)->find("FOOD");
 
         return response()->json($category);
+    }
+
+    public function testOneToMany()
+    {
+        $category = Category::find("FOOD");
+
+        // $product = Product::where("category_id", $category->id)->get();
+        $product = $category->products;
+
+        return response()->json([
+            "data" => $product
+        ]);
+    }
+
+    public function testOneToManyQuery()
+    {
+        $category = new Category();
+        $category->id = "FOOD";
+        $category->name = "Food";
+        $category->description = "Food Category";
+        $category->is_active = true;
+        $category->save();
+
+        $product = new Product();
+        $product->id = "1";
+        $product->name = "Product 1";
+        $product->description =  "Description 1";
+
+        $category->products()->save($product);
+
+        return response()->json([
+            "message"=> "Succes",
+            "data"=> $product
+        ]);
+
+    }
+
+    public function testRelationQuery()
+    {
+        $category = Category::find("FOOD");
+        // $product = $category->products;
+        $outOfStockProduct = $category->products()->where("stock", "<=", 0)->get();
+
+        return response()->json([
+            "category"=> $category,
+            "out_of_stock_product"=> $outOfStockProduct
+        ]);
+    }
+
+    public function testHasManyHasOne()
+    {
+        $category = Category::find("FOOD");
+        $cheapestProduct = $category->cheapestProduct;
+        $mostExpensivetProduct = $category->mostExpensivetProduct;
+
+        return response()->json([
+            "cheapestProduct"=> $cheapestProduct,
+            "mostExpensivetProduct"=> $mostExpensivetProduct
+        ]);
+    }
+
+    public function testHasManyThrough()
+    {
+        $category = Category::find("FOOD");
+
+        $reviews = $category->reviews;
+
+        return response()->json([
+            "category" => $category->name,
+            "reviews"=> $reviews
+        ]);
     }
 }

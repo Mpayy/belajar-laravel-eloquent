@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::get('/user', function (Request $request) {
@@ -28,6 +31,11 @@ Route::get('categories/testCreateWithQueryBuilder',[CategoryController::class,'t
 Route::get('categories/testUpdateMass',[CategoryController::class,'testUpdateMass']);
 Route::get('categories/testRemoveGlobalScope',[CategoryController::class,'testRemoveGlobalScope']);
 Route::get('categories/testWithoutGlobalScope',[CategoryController::class,'testWithoutGlobalScope']);
+Route::get('categories/testOneToMany',[CategoryController::class,'testOneToMany']);
+Route::get('categories/testOneToManyQuery',[CategoryController::class,'testOneToManyQuery']);
+Route::get('categories/testRelationQuery',[CategoryController::class,'testRelationQuery']);
+Route::get('categories/testHasManyHasOne',[CategoryController::class,'testHasManyHasOne']);
+Route::get('categories/testHasManyThrough',[CategoryController::class,'testHasManyThrough']);
 
 Route::get('vouchers/testCreateVoucher', [VoucherController::class, "testCreateVoucher"]);
 Route::get('vouchers/testVoucherUUID', [VoucherController::class, "testVoucherUUID"]);
@@ -37,3 +45,11 @@ Route::get('vouchers/testLocalScope', [VoucherController::class, "testLocalScope
 
 Route::get('comments/testCreateComment', [CommentController::class, "testCreateComment"]);
 Route::get('comments/testDefaultAttributesValues', [CommentController::class, "testDefaultAttributesValues"]);
+
+Route::get('customers/testQueryOneToOne', [CustomerController::class, "testQueryOneToOne"]);
+Route::get('customers/testInsertRelationship', [CustomerController::class, "testInsertRelationship"]);
+Route::get('customers/testHasOneThrough', [CustomerController::class, "testHasOneThrough"]);
+Route::get('customers/testManyToMany', [CustomerController::class, "testManyToMany"]);
+Route::get('customers/testManyToManyDetach', [CustomerController::class, "testManyToManyDetach"]);
+
+Route::get('products/testOneToMany', [ProductController::class, "testOneToMany"]);
