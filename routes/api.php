@@ -3,10 +3,14 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -36,6 +40,8 @@ Route::get('categories/testOneToManyQuery',[CategoryController::class,'testOneTo
 Route::get('categories/testRelationQuery',[CategoryController::class,'testRelationQuery']);
 Route::get('categories/testHasManyHasOne',[CategoryController::class,'testHasManyHasOne']);
 Route::get('categories/testHasManyThrough',[CategoryController::class,'testHasManyThrough']);
+Route::get('categories/testQueryingRelations',[CategoryController::class,'testQueryingRelations']);
+Route::get('categories/testAggregationsRelations',[CategoryController::class,'testAggregationsRelations']);
 
 Route::get('vouchers/testCreateVoucher', [VoucherController::class, "testCreateVoucher"]);
 Route::get('vouchers/testVoucherUUID', [VoucherController::class, "testVoucherUUID"]);
@@ -51,5 +57,23 @@ Route::get('customers/testInsertRelationship', [CustomerController::class, "test
 Route::get('customers/testHasOneThrough', [CustomerController::class, "testHasOneThrough"]);
 Route::get('customers/testManyToMany', [CustomerController::class, "testManyToMany"]);
 Route::get('customers/testManyToManyDetach', [CustomerController::class, "testManyToManyDetach"]);
+Route::get('customers/testPivotAtribute', [CustomerController::class, "testPivotAtribute"]);
+Route::get('customers/testPivotAttributeCondition', [CustomerController::class, "testPivotAttributeCondition"]);
+Route::get('customers/testPivotModel', [CustomerController::class, "testPivotModel"]);
+Route::get('customers/testOneToOnePolymorphic', [CustomerController::class, "testOneToOnePolymorphic"]);
+Route::get('customers/testEager', [CustomerController::class, "testEager"]);
+Route::get('customers/testEagerModel', [CustomerController::class, "testEagerModel"]);
 
 Route::get('products/testOneToMany', [ProductController::class, "testOneToMany"]);
+Route::get('products/testOneToOnePolymorphicProduct', [ProductController::class, "testOneToOnePolymorphicProduct"]);
+Route::get('products/testOneToManyPolymorphic', [ProductController::class, "testOneToManyPolymorphic"]);
+Route::get('products/testOneOfManyPolymorphic', [ProductController::class, "testOneOfManyPolymorphic"]);
+Route::get('products/testManyToManyPolymorphic', [ProductController::class, "testManyToManyPolymorphic"]);
+Route::get('products/testEloquentCollection', [ProductController::class, "testEloquentCollection"]);
+Route::get('products/testSerializationRelation', [ProductController::class, "testSerializationRelation"]);
+
+Route::get('persons/testAccessorsMutators', [PersonController::class, "testAccessorsMutators"]);
+Route::get('persons/testAttributeCasting', [PersonController::class, "testAttributeCasting"]);
+Route::get('persons/testCustomCast', [PersonController::class, "testCustomCast"]);
+
+Route::get('employees/testFactory', [EmployeeController::class, "testFactory"]);

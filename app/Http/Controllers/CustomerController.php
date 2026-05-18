@@ -83,4 +83,76 @@ class CustomerController extends Controller
             "products"=> $products
         ]);
     }
+
+    public function testPivotAtribute()
+    {
+        $customer = Customer::find("PAI");
+        $products = $customer->likeProducts;
+
+        foreach ($products as $product) {
+            return response()->json([
+                "pivot" => $product->pivot
+            ]);
+        }
+    }
+
+    public function testPivotAttributeCondition()
+    {
+        $customer = Customer::find("PAI");
+        $products = $customer->likeProductsLastWeek;
+
+        foreach ($products as $product) {
+            return response()->json([
+                "pivot" => $product->pivot
+            ]);
+        }
+    }
+
+    public function testPivotModel()
+    {
+        $customer = Customer::find("PAI");
+
+        $products = $customer->likeProducts;
+
+        foreach ($products as $product) {
+            $pivot = $product->pivot; // object Model Like
+            
+            return response()->json([
+                "pivot_customer" => $pivot->customer,
+                "pivot_product" => $pivot->product,
+            ]);
+        }
+    }
+
+    public function testOneToOnePolymorphic()
+    {
+        $customer = Customer::find("PAI");
+        $image = $customer->image;
+
+        return response()->json([
+            "customer" => $customer,
+            "image" => $image
+        ]);
+    }
+
+    public function testEager()
+    {
+        $customer = Customer::with(["wallet", "image"])->find("PAI");
+
+        return response()->json([
+            "customer" => $customer,
+            "image" => $customer->image,
+            "wallet" => $customer->wallet,
+        ]);
+    }
+
+    public function testEagerModel()
+    {
+        $customer = Customer::find("PAI");
+
+        return response()->json([
+            "customer" => $customer,
+            "wallet" => $customer->wallet,
+        ]);
+    }
 }

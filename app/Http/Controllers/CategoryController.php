@@ -26,6 +26,7 @@ class CategoryController extends Controller
             $categories[] = [
                 "id" => "ID $i",
                 "name"=> "Name $i",
+                "is_active" => true
             ];
         }
 
@@ -60,6 +61,7 @@ class CategoryController extends Controller
             $category = new Category();
             $category->id = "ID $i";
             $category->name = "Name $i";
+            $category->is_active = true;
             $category->save();
         }
 
@@ -75,6 +77,7 @@ class CategoryController extends Controller
             $categories[] = [
                 "id" => "ID $i",
                 "name"=> "Name $i",
+                "is_active" => true
             ];
         }
 
@@ -109,6 +112,7 @@ class CategoryController extends Controller
             $categories[] = [
                 "id" => "ID $i",
                 "name"=> "Name $i",
+                "is_active" => true
             ];
         }
 
@@ -274,5 +278,25 @@ class CategoryController extends Controller
             "category" => $category->name,
             "reviews"=> $reviews
         ]);
+    }
+
+    public function testQueryingRelations()
+    {
+        $category = Category::find("FOOD");
+
+        $products = $category->products()
+        ->where("price", "=", 200)
+        ->get();
+
+        return response()->json($products);
+    }
+    public function testAggregationsRelations()
+    {
+        $category = Category::find("FOOD");
+
+        $products = $category->products()
+        ->count();
+
+        return response()->json($products);
     }
 }

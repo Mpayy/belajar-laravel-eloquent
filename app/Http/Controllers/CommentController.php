@@ -13,6 +13,8 @@ class CommentController extends Controller
         $comment->email = "rifaih712@gmail.com";
         $comment->title = "Sample Title";
         $comment->comment = "Sample Comment";
+        $comment->commentable_id = "1";
+        $comment->commentable_type = "product";
         $comment->save();
 
         return response()->json([
@@ -25,6 +27,8 @@ class CommentController extends Controller
     {
         $comment = new Comment();
         $comment->email = "rifaih712@gmail.com";
+        $comment->commentable_id = "1";
+        $comment->commentable_type = "product";
         $comment->save();
 
         return response()->json([
